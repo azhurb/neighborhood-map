@@ -10,7 +10,8 @@ git clone https://github.com/azhurb/restaurant-map.git
 cd ./restaurant-map
 ```
 
-2. Start the web server.
+2. Start the web server.  
+
 Python 2:
 ```
 python -m SimpleHTTPServer 8080
