@@ -91,19 +91,19 @@ var koViewModel = function(map, locationList) {
                     var desc = '<div><strong>' + marker.title + '</strong></div>';
 
                     if (info.contact.formattedPhone) {
-                        desc += '<div>phone: ' + info.contact.formattedPhone + '</div>'
+                        desc += '<div>phone: ' + info.contact.formattedPhone + '</div>';
                     }
 
                     if (info.contact.twitter) {
-                        desc += '<div>twitter: <a href="https://twitter/' + info.contact.twitter + '">@' + info.contact.twitter + '</a></div>'
+                        desc += '<div>twitter: <a href="https://twitter/' + info.contact.twitter + '">@' + info.contact.twitter + '</a></div>';
                     }
 
                     if (info.menu) {
-                        desc += '<div><a target="_blank" href="' + info.menu.url + '">' + info.menu.anchor + '</a></div>'
+                        desc += '<div><a target="_blank" href="' + info.menu.url + '">' + info.menu.anchor + '</a></div>';
                     }
 
                     if (info.url) {
-                        desc += '<div><a target="_blank" href="' + info.url + '">' + info.url + '</a></div>'
+                        desc += '<div><a target="_blank" href="' + info.url + '">' + info.url + '</a></div>';
                     }
 
                     // Load place photos using Foursquare API.
@@ -112,7 +112,7 @@ var koViewModel = function(map, locationList) {
                         '&client_secret=UZ44OJ125ZUZRJQH04TILLCXTNOM54WFTGAF3NERXKGQSBKF' +
                         '&v=' + (new Date().toISOString().slice(0, 10).replace(/-/g, "")),
                         function(result) {
-                            var photos = result && result.response && result.response.photos && result.response.photos.items || []
+                            var photos = result && result.response && result.response.photos && result.response.photos.items || [];
 
                             if (photos.length > 0) {
                                 desc += '<div class="place-img"><img src="' + photos[0].prefix + '200x150' + photos[0].suffix + '"/></div>';
@@ -122,12 +122,12 @@ var koViewModel = function(map, locationList) {
                         }).fail(function() {
                         infowindow.setContent('<div><strong>' + marker.title + '</strong></div>' +
                             '<div>No Foursquare Info Found</div>');
-                    })
+                    });
                 }
             ).fail(function() {
                 infowindow.setContent('<div><strong>' + marker.title + '</strong></div>' +
                     '<div>No Foursquare Info Found</div>');
-            })
+            });
         }
     };
 
@@ -152,7 +152,7 @@ var koViewModel = function(map, locationList) {
         this.latLng = dataObj.geometry.location;
         this.marker = null;
         this.icon = dataObj.icon;
-    };
+    }
 };
 
 // "Enter" key handler.
