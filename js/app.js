@@ -1,4 +1,62 @@
-var koViewModel = function(map, locationList) {
+function resize() {
+    if ($(window).width() < 930) {
+        $('.container').addClass('minimized-sidebar');
+    } else {
+        $('.container').removeClass('minimized-sidebar');
+    }
+}
+
+$(document).ready( function() {
+    $(window).resize(resize);
+    resize();
+});
+
+function initMap() {
+    var target = {
+        lat: 37.7797773,
+        lng: -122.4356223
+    }
+
+    googleMap = new google.maps.Map(document.getElementById('map'), {
+        center: target,
+        zoom: 13
+    });
+
+    var request = {
+        location: target,
+        radius: 2500,
+        type: 'restaurant',
+        openNow: true,
+        rankBy: google.maps.places.RankBy.PROMINENCE
+    };
+
+    var service = new google.maps.places.PlacesService(googleMap);
+
+    service.nearbySearch({
+        location: target,
+        radius: 2500,
+        type: 'restaurant',
+        openNow: true,
+        rankBy: google.maps.places.RankBy.PROMINENCE
+    }, function(results, status) {
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+            locationList = results;
+        }
+
+        ko.applyBindings(new ViewModel(googleMap, locationList.slice(0, 10) || []));
+    });
+}
+
+function mapsErrorHandler(error) {
+    $('#map').text('Google MAP not available.');
+}
+
+// Google Maps Auth error handler.
+function gm_authFailure() {
+    $('#map').text('Google MAP auth error.');
+}
+
+var ViewModel = function(map, locationList) {
 
     var self = this;
 
@@ -43,7 +101,7 @@ var koViewModel = function(map, locationList) {
         self.visiblePlaces.removeAll();
 
         self.allPlaces.forEach(function(place) {
-            place.marker.setMap(null);
+            place.marker.setVisible(false);
 
             if (place.name.toLowerCase().indexOf(searchInput) !== -1) {
                 self.visiblePlaces.push(place);
@@ -51,7 +109,7 @@ var koViewModel = function(map, locationList) {
         });
 
         self.visiblePlaces().forEach(function(place) {
-            place.marker.setMap(self.googleMap);
+            place.marker.setVisible(true);
         });
     };
 
@@ -120,9 +178,9 @@ var koViewModel = function(map, locationList) {
 
                             infowindow.setContent(desc);
                         }).fail(function() {
-                        infowindow.setContent('<div><strong>' + marker.title + '</strong></div>' +
-                            '<div>No Foursquare Info Found</div>');
-                    });
+                            infowindow.setContent('<div><strong>' + marker.title + '</strong></div>' +
+                                '<div>No Foursquare Info Found</div>');
+                        });
                 }
             ).fail(function() {
                 infowindow.setContent('<div><strong>' + marker.title + '</strong></div>' +
@@ -143,7 +201,7 @@ var koViewModel = function(map, locationList) {
             marker.setAnimation(google.maps.Animation.BOUNCE);
             window.setTimeout(function() {
                 marker.setAnimation(null);
-            }, 1500);
+            }, 1400);
         }
     };
 
@@ -155,16 +213,12 @@ var koViewModel = function(map, locationList) {
     }
 };
 
-// "Enter" key handler.
+// On change key handler.
 ko.bindingHandlers.enterkey = {
     init: function(element, valueAccessor, allBindings, viewModel) {
         var callback = valueAccessor();
-        $(element).keypress(function(event) {
-            var keyCode = (event.which ? event.which : event.keyCode);
-            if (keyCode === 13) {
-                callback.call(viewModel);
-                return false;
-            }
+        $(element).on('change paste keyup', function(event) {
+            callback.call(viewModel);
             return true;
         });
     }

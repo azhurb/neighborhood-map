@@ -77,15 +77,3 @@ ul {
     width: 200px;
     height: 155px;
 }
-
-@media screen and (max-width: 930px) {
-    .sidebar-content {
-        display: none;
-    }
-    .sidebar {
-        width: 15px;
-    }
-    #map {
-        left: 55px;
-    }
-}

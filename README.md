@@ -4,10 +4,24 @@ A single-page application featuring a map of your neighborhood restaurants with 
 
 ## Installation
 
-All you need is to download the application files to your web server and open `restaurant-map/index.html` in your browser.
+1. Download the application files.
 ```
 git clone https://github.com/azhurb/restaurant-map.git
+cd ./restaurant-map
 ```
+
+2. Start the web server.
+Python 2:
+```
+python -m SimpleHTTPServer 8080
+```
+
+Python 3:
+```
+python -m http.server 8080
+```
+
+3. Open in the browser address http://0.0.0.0:8080
 
 ## Live Demo
 
