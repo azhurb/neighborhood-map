@@ -1,12 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Neighborhood Map</title>
-</head>
-<body>
 
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="theme-color" content="#9ccbfb">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Map</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
+    <script src="https://use.fontawesome.com/e5d9246e49.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <i class="fa fa-bars" aria-hidden="true" data-bind="click: toggleSidebar"></i>
+            <div class="sidebar-content">
+                <h1>Restaurant Map</h1>
+                <input type="text" class="filter" data-bind="value: userInput, valueUpdate: 'afterkeydown', enterkey: filterMarkers"></input>
+                <button class="filter-btn" data-bind="click: filterMarkers"><i class="fa fa-filter" aria-hidden="true"></i></button>
+                <ul data-bind="foreach: visiblePlaces">
+                    <li>
+                        <img class="place-icon" data-bind="attr:{src: icon}" /><a href="#" data-bind="text: name, click: $parent.showPlaceInfo"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="map"></div>
+    </div>
+    <script>
+
+        function initMap(){
+            var target = {lat: 37.7797773, lng: -122.4356223}
+
+            googleMap = new google.maps.Map(document.getElementById('map'), {
+                center: target,
+                zoom: 13
+            });
+
+            var request = {
+                location: target,
+                radius: 2500,
+                type: 'restaurant',
+                openNow: true,
+                rankBy: google.maps.places.RankBy.PROMINENCE
+            };
+
+            var service = new google.maps.places.PlacesService(googleMap);
+
+            service.nearbySearch({
+                location: target,
+                radius: 2500,
+                type: 'restaurant',
+                openNow: true,
+                rankBy: google.maps.places.RankBy.PROMINENCE
+            }, function(results, status){
+                if (status == google.maps.places.PlacesServiceStatus.OK) {
+                    locationList = results;
+                }
+
+                ko.applyBindings(new koViewModel(googleMap, locationList.slice(0, 10) || []));
+            });
+        }
+
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyA21DqDzc5v5tF64WDOu39QdCafALcTwJc&callback=initMap" type="text/javascript"></script>
     <script src="js/lib/knockout-3.4.2.js"></script>
     <script src="js/app.js"></script>
 </body>
+
 </html>
