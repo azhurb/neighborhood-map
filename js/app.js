@@ -72,54 +72,54 @@ var koViewModel = function(map, locationList) {
             });
 
             // Load place information using Foursquare API.
-            $.getJSON('https://api.foursquare.com/v2/venues/search'
-                +'?ll='+marker.position.lat()+','+marker.position.lng()
-                +'&client_id=420V5ZMGHIA3ZIW1SF1SP523YIDPSIY24CFV35Y1ET1QQOST'
-                +'&client_secret=UZ44OJ125ZUZRJQH04TILLCXTNOM54WFTGAF3NERXKGQSBKF'
-                +'&query='+encodeURIComponent(marker.title)
-                +'&v='+(new Date().toISOString().slice(0,10).replace(/-/g,"")),
-                function (result) {
-                    var info = result && result.response
-                    && result.response.venues
-                    && result.response.venues.length > 0 ? result.response.venues[0] : null;
+            $.getJSON('https://api.foursquare.com/v2/venues/search' +
+                '?ll=' + marker.position.lat() + ',' + marker.position.lng() +
+                '&client_id=420V5ZMGHIA3ZIW1SF1SP523YIDPSIY24CFV35Y1ET1QQOST' +
+                '&client_secret=UZ44OJ125ZUZRJQH04TILLCXTNOM54WFTGAF3NERXKGQSBKF' +
+                '&query=' + encodeURIComponent(marker.title) +
+                '&v=' + (new Date().toISOString().slice(0, 10).replace(/-/g, "")),
+                function(result) {
+                    var info = result && result.response &&
+                        result.response.venues &&
+                        result.response.venues.length > 0 ? result.response.venues[0] : null;
 
-                    if (!info){
+                    if (!info) {
                         infowindow.setContent('<div><strong>' + marker.title + '</strong></div>' +
                             '<div>No Foursquare Info Found</div>');
                     }
 
                     var desc = '<div><strong>' + marker.title + '</strong></div>';
 
-                    if (info.contact.formattedPhone){
-                        desc += '<div>phone: '+info.contact.formattedPhone+'</div>'
+                    if (info.contact.formattedPhone) {
+                        desc += '<div>phone: ' + info.contact.formattedPhone + '</div>'
                     }
 
-                    if (info.contact.twitter){
-                        desc += '<div>twitter: <a href="https://twitter/'+info.contact.twitter+'">@'+info.contact.twitter+'</a></div>'
+                    if (info.contact.twitter) {
+                        desc += '<div>twitter: <a href="https://twitter/' + info.contact.twitter + '">@' + info.contact.twitter + '</a></div>'
                     }
 
-                    if (info.menu){
-                        desc += '<div><a target="_blank" href="'+info.menu.url+'">'+info.menu.anchor+'</a></div>'
+                    if (info.menu) {
+                        desc += '<div><a target="_blank" href="' + info.menu.url + '">' + info.menu.anchor + '</a></div>'
                     }
 
-                    if (info.url){
-                        desc += '<div><a target="_blank" href="'+info.url+'">'+info.url+'</a></div>'
+                    if (info.url) {
+                        desc += '<div><a target="_blank" href="' + info.url + '">' + info.url + '</a></div>'
                     }
 
                     // Load place photos using Foursquare API.
-                    $.getJSON('https://api.foursquare.com/v2/venues/'+info.id+'/photos'
-                        +'?client_id=420V5ZMGHIA3ZIW1SF1SP523YIDPSIY24CFV35Y1ET1QQOST'
-                        +'&client_secret=UZ44OJ125ZUZRJQH04TILLCXTNOM54WFTGAF3NERXKGQSBKF'
-                        +'&v='+(new Date().toISOString().slice(0,10).replace(/-/g,"")),
-                        function (result) {
-                            var photos = result && result.response && result.response.photos && result.response.photos.items  || []
+                    $.getJSON('https://api.foursquare.com/v2/venues/' + info.id + '/photos' +
+                        '?client_id=420V5ZMGHIA3ZIW1SF1SP523YIDPSIY24CFV35Y1ET1QQOST' +
+                        '&client_secret=UZ44OJ125ZUZRJQH04TILLCXTNOM54WFTGAF3NERXKGQSBKF' +
+                        '&v=' + (new Date().toISOString().slice(0, 10).replace(/-/g, "")),
+                        function(result) {
+                            var photos = result && result.response && result.response.photos && result.response.photos.items || []
 
-                            if (photos.length > 0){
-                                desc += '<div class="place-img"><img src="'+photos[0].prefix+'200x150'+photos[0].suffix+'"/></div>';
+                            if (photos.length > 0) {
+                                desc += '<div class="place-img"><img src="' + photos[0].prefix + '200x150' + photos[0].suffix + '"/></div>';
                             }
 
                             infowindow.setContent(desc);
-                    }).fail(function() {
+                        }).fail(function() {
                         infowindow.setContent('<div><strong>' + marker.title + '</strong></div>' +
                             '<div>No Foursquare Info Found</div>');
                     })
@@ -136,12 +136,12 @@ var koViewModel = function(map, locationList) {
         self.populateInfoWindow(place.marker, self.largeInfowindow);
     };
 
-    self.animateMarker = function(marker){
+    self.animateMarker = function(marker) {
         if (marker.getAnimation() !== null) {
             marker.setAnimation(null);
         } else {
             marker.setAnimation(google.maps.Animation.BOUNCE);
-            window.setTimeout(function(){
+            window.setTimeout(function() {
                 marker.setAnimation(null);
             }, 1500);
         }

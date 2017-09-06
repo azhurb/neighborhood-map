@@ -1,5 +1,4 @@
-body,
-html {
+body, html {
     margin: 0;
     padding: 0;
     width: 100%;
@@ -12,15 +11,13 @@ body {
     color: #2d3c49;
 }
 
-h1,
-h2,
-h3 {
+h1, h2, h3 {
     font-weight: 500;
 }
 
 ul {
-  list-style-type: none;
-  padding: 0
+    list-style-type: none;
+    padding: 0
 }
 
 .sidebar a {
@@ -41,18 +38,18 @@ ul {
     position: absolute;
 }
 
-.place-icon{
+.place-icon {
     width: 14px;
     height: 14px;
     margin-right: 2px;
 }
 
-.filter{
+.filter {
     font-size: 22px;
     width: 238px;
 }
 
-.filter-btn{
+.filter-btn {
     font-size: 22px;
 }
 
@@ -76,7 +73,7 @@ ul {
     left: 55px;
 }
 
-.place-img{
+.place-img {
     width: 200px;
     height: 155px;
 }
@@ -85,11 +82,9 @@ ul {
     .sidebar-content {
         display: none;
     }
-
     .sidebar {
         width: 15px;
     }
-
     #map {
         left: 55px;
     }
