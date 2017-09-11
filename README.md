@@ -34,3 +34,7 @@ https://azhurb.github.io/restaurant-map/
 2. [Google Maps APIs](https://developers.google.com/maps/documentation/javascript/tutorial?hl=ru)
 3. [Using Knockout.JS and Google maps API](https://stackoverflow.com/questions/32899466/using-knockout-js-and-google-maps-api)
 4. [Foursquare API](https://developer.foursquare.com/docs/)
+
+## License
+
+Licensed under the MIT license.
